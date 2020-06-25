@@ -20,10 +20,42 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Document
- *
- * @ApiResource(attributes={"normalization_context"={"groups"={"Document"}}})
  * @ORM\Entity
+ * @ApiResource(
+ *     iri="http://schema.org/Document",
+ *     normalizationContext={
+ *         "groups"={"media_object_read"}
+ *     },
+ *     collectionOperations={
+ *         "post"={
+ *             "controller"=CreateMediaObjectAction::class,
+ *             "deserialize"=false,
+ *             "validation_groups"={"Default", "media_object_create"},
+ *             "openapi_context"={
+ *                 "requestBody"={
+ *                     "content"={
+ *                         "multipart/form-data"={
+ *                             "schema"={
+ *                                 "type"="object",
+ *                                 "properties"={
+ *                                     "file"={
+ *                                         "type"="string",
+ *                                         "format"="binary"
+ *                                     }
+ *                                 }
+ *                             }
+ *                         }
+ *                     }
+ *                 }
+ *             }
+ *         },
+ *         "get"
+ *     },
+ *     itemOperations={
+ *         "get"
+ *     }
+ * )
+ * @Vich\Uploadable
  */
 class Document {
 

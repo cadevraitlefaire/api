@@ -9,20 +9,20 @@
 
 namespace App\Controller;
 
-use App\Entity\MediaObject;
+use App\Entity\Document;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class CreateMediaObjectAction
 {
-    public function __invoke(Request $request): MediaObject
+    public function __invoke(Request $request): Document
     {
         $uploadedFile = $request->files->get('file');
         if (!$uploadedFile) {
             throw new BadRequestHttpException('"file" is required');
         }
 
-        $mediaObject = new MediaObject();
+        $mediaObject = new Document();
         $mediaObject->file = $uploadedFile;
 
         return $mediaObject;
