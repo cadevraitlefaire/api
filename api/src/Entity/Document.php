@@ -9,7 +9,7 @@ declare(strict_types=1);
  * Time: 21.28
  */
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -23,15 +23,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Document
  *
  * @ApiResource(attributes={"normalization_context"={"groups"={"Document"}}})
- * @ORM\Table(name="document")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DocumentRepository")
+ * @ORM\Entity
  */
 class Document {
 
 
     /**
      * @var File|null
-     * @ORM\ManyToOne(targetEntity=Subject::class, inversedBy="file")
+     * @ORM\ManyToOne(targetEntity=Subject::class, inversedBy="document")
      */
     public $subject;
 

@@ -9,7 +9,7 @@ declare(strict_types=1);
  * Time: 21.27
  */
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,8 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * School
  *
  * @ApiResource(attributes={"normalization_context"={"groups"={"School"}}})
- * @ORM\Table(name="school")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SchoolRepository")
+ * @ORM\Entity
  */
 class School
 {

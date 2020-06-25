@@ -9,22 +9,19 @@ declare(strict_types=1);
  * Time: 21.29
  */
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use AppBundle\Entity\Document;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * School
- *
  * @ApiResource(attributes={"normalization_context"={"groups"={"Subject"}}})
- * @ORM\Table(name="school")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SubjectRepository")
+ * @ORM\Entity
  */
 class Subject
 {
@@ -44,35 +41,61 @@ class Subject
      */
     protected $name;
 
+    /**
+     * @var MediaObject|null
+     *
+     * @ORM\ManyToOne(targetEntity=School::class)
+     * @ApiProperty(iri="http://schema.org/image")
+     * @Groups({"Subject"})
+     */
+    public $school;
+
+    /**
+     * @return MediaObject|null
+     */
+    public function getSchool(): ?MediaObject
+    {
+        return $this->school;
+    }
+
+    /**
+     * @param MediaObject|null $school
+     */
+    public function setSchool(?MediaObject $school): void
+    {
+        $this->school = $school;
+    }
+
 
     /**
      * @var MediaObject|null
      *
-     * @ORM\OneToMany(targetEntity=Document::class)
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="subject")
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
+     * @Groups({"Subject"})
      */
-    public $file;
+    public $document;
 
     public function __construct()
     {
-        return $this->file = new ArrayCollection();
+        return $this->document = new ArrayCollection();
     }
 
     /**
-     * @return \AppBundle\Entity\File|null
+     * @return \AppBundle\Entity\Document|null
      */
-    public function getFile(): ?\AppBundle\Entity\File
+    public function getDocument(): ?\AppBundle\Entity\Document
     {
-        return $this->file;
+        return $this->document;
     }
 
     /**
-     * @param \AppBundle\Entity\File|null $file
+     * @param \AppBundle\Entity\Document|null $document
      */
-    public function setFile(?\AppBundle\Entity\File $file): void
+    public function setDocument(?\AppBundle\Entity\Document $document): void
     {
-        $this->file = $file;
+        $this->document = $document;
     }
 
 
