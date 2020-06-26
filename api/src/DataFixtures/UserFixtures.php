@@ -12,9 +12,17 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $user->setUsername("jenaye");
-        $user->setPassword("!ChangeMe!");
+        $user->setPassword($this->passwordEncoder->encodePassword($user, '!ChangeMe!'));
         $user->setRoles(["ROLE_USER", "ROLE_ADMIN"]);
         $manager->persist($user);
         $manager->flush();
+    }
+
+    private $passwordEncoder;
+
+
+     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
     }
 }
