@@ -98,9 +98,26 @@ class Document {
      */
     public $filePath;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="documents")
+     */
+    private $type;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
 
