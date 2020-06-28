@@ -6,7 +6,7 @@ security:
 
   # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
   providers:
-    #jwt:
+    #il ajwt:
       #lexik_jwt: ~
     # used to reload user from session & other features (e.g. switch_user)
     app_user_provider:
@@ -43,6 +43,4 @@ security:
   access_control:
     - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
     - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/school, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }

@@ -20,7 +20,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * School
- * @ApiResource(attributes={"normalization_context"={"groups"={"Subject"}}})
+ * @ApiResource()
  * @ORM\Entity
  */
 class Subject
@@ -30,41 +30,16 @@ class Subject
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"Subject"})
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=12)
-     * @Groups({"Subject"})
      */
     protected $name;
 
-    /**
-     * @var MediaObject|null
-     *
-     * @ORM\ManyToOne(targetEntity=School::class)
-     * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"Subject"})
-     */
-    public $school;
 
-    /**
-     * @return MediaObject|null
-     */
-    public function getSchool(): ?MediaObject
-    {
-        return $this->school;
-    }
-
-    /**
-     * @param MediaObject|null $school
-     */
-    public function setSchool(?MediaObject $school): void
-    {
-        $this->school = $school;
-    }
 
 
     /**
@@ -73,9 +48,13 @@ class Subject
      * @ORM\OneToMany(targetEntity=Document::class, mappedBy="subject")
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"Subject"})
      */
     public $document;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=School::class, inversedBy="subject")
+     */
+    private $school;
 
     public function __construct()
     {
@@ -129,6 +108,18 @@ class Subject
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): self
+    {
+        $this->school = $school;
+
+        return $this;
     }
 
 }
